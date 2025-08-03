@@ -14,6 +14,7 @@ import android.view.WindowManager
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.ImageView
+import android.graphics.PorterDuff
 import kotlin.math.abs
 
 class MainActivity : Activity(), SensorEventListener {
@@ -32,10 +33,13 @@ class MainActivity : Activity(), SensorEventListener {
     private var currentBrightness = 0.2f
     private var lastMovementTime = System.currentTimeMillis()
     private val handler = Handler(Looper.getMainLooper())
-    
+
     // Pixel shift for burn-in protection
     private var shiftX = 0
     private var shiftY = 0
+
+    // Inversion cycle for burn-in protection
+    private var isInverted = false
     
     // Configuration
     companion object {
@@ -45,6 +49,7 @@ class MainActivity : Activity(), SensorEventListener {
         const val PEEK_DURATION = 10000L     // 10 seconds at full brightness
         const val SHIFT_INTERVAL = 60000L    // Shift pixels every minute
         const val COLOR_VARIANCE = 15        // ±15 RGB variation
+        const val INVERSION_INTERVAL = 20000L // 20 seconds between inversions
     }
     
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,6 +73,9 @@ class MainActivity : Activity(), SensorEventListener {
         
         // Start color variation timer
         startColorVariationTimer()
+
+        // Start inversion cycle for burn-in protection
+        startInversionCycle()
     }
     
     private fun setupUI() {
@@ -99,8 +107,18 @@ class MainActivity : Activity(), SensorEventListener {
     
     private fun toggleColors() {
         isRed = !isRed
-        rootLayout.setBackgroundColor(getVariedColor(if (isRed) Color.RED else Color.GREEN))
         thumbsIcon.setImageResource(if (isRed) R.drawable.thumbs_down else R.drawable.thumbs_up)
+
+        // Update colors based on current inversion state
+        if (isInverted) {
+            // Currently inverted: black background, colored thumbs
+            rootLayout.setBackgroundColor(Color.BLACK)
+            thumbsIcon.setColorFilter(if (isRed) Color.RED else Color.GREEN, PorterDuff.Mode.SRC_IN)
+        } else {
+            // Currently normal: colored background, white thumbs
+            rootLayout.setBackgroundColor(getVariedColor(if (isRed) Color.RED else Color.GREEN))
+            thumbsIcon.clearColorFilter()
+        }
 
         // Also trigger instant brightness on tap
         instantWakeUp()
@@ -216,6 +234,26 @@ class MainActivity : Activity(), SensorEventListener {
             }
             else -> baseColor
         }
+    }
+
+    // Burn-in protection: Inversion cycle
+    private fun startInversionCycle() {
+        handler.postDelayed(object : Runnable {
+            override fun run() {
+                if (isInverted) {
+                    // State 1: Normal - colored background, white thumbs
+                    rootLayout.setBackgroundColor(getVariedColor(if (isRed) Color.RED else Color.GREEN))
+                    thumbsIcon.clearColorFilter()
+                } else {
+                    // State 2: Inverted - black background, colored thumbs
+                    rootLayout.setBackgroundColor(Color.BLACK)
+                    thumbsIcon.setColorFilter(if (isRed) Color.RED else Color.GREEN, PorterDuff.Mode.SRC_IN)
+                }
+
+                isInverted = !isInverted
+                handler.postDelayed(this, INVERSION_INTERVAL)
+            }
+        }, INVERSION_INTERVAL)
     }
 
     override fun onResume() {

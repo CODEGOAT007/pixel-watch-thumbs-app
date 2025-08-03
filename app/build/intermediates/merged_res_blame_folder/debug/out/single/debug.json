@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "com.example.instantpeek.app-merged_res-13:/drawable_thumbs_up.png.flat",
+        "source": "com.example.instantpeek.app-main-15:/drawable/thumbs_up.png"
+    },
+    {
+        "merged": "com.example.instantpeek.app-merged_res-13:/drawable_thumbs_down.png.flat",
+        "source": "com.example.instantpeek.app-main-15:/drawable/thumbs_down.png"
+    },
+    {
+        "merged": "com.example.instantpeek.app-merged_res-13:/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "com.example.instantpeek.app-main-15:/mipmap-hdpi/ic_launcher.png"
+    }
+]

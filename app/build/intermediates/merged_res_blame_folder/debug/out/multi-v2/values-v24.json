@@ -1,0 +1,20 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.example.instantpeek.app-mergeDebugResources-11:/values-v24/values-v24.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\Chris\\.gradle\\caches\\8.10\\transforms\\695f006e7f647465e763c3ca9b0d4549\\transformed\\wear-1.3.0\\res\\values-v24\\values-v24.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "14",
+                        "endColumns": "12",
+                        "endOffsets": "929"
+                    }
+                }
+            ]
+        }
+    ]
+}
