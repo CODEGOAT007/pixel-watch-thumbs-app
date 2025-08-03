@@ -3,3 +3,4 @@ local
 drawable thumbs_down
 drawable thumbs_up
 mipmap ic_launcher
+string app_name

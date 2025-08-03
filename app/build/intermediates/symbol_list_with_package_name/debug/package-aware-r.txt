@@ -417,6 +417,7 @@ layout ws_single_page_nav_drawer_peek_view
 layout ws_single_page_nav_drawer_text
 layout ws_wearable_drawer_view
 mipmap ic_launcher
+string app_name
 string call_notification_answer_action
 string call_notification_answer_video_action
 string call_notification_decline_action

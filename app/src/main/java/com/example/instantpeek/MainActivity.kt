@@ -15,6 +15,9 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.ImageView
 import android.graphics.PorterDuff
+import androidx.core.widget.ImageViewCompat
+import android.content.res.ColorStateList
+import android.util.Log
 import kotlin.math.abs
 
 class MainActivity : Activity(), SensorEventListener {
@@ -71,10 +74,7 @@ class MainActivity : Activity(), SensorEventListener {
         // Start pixel shifting timer
         startPixelShiftTimer()
         
-        // Start color variation timer
-        startColorVariationTimer()
-
-        // Start inversion cycle for burn-in protection
+        // Start inversion cycle for burn-in protection (this handles color changes)
         startInversionCycle()
     }
     
@@ -82,7 +82,7 @@ class MainActivity : Activity(), SensorEventListener {
         // Root layout
         rootLayout = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
-            setBackgroundColor(getVariedColor(Color.RED))
+            setBackgroundColor(Color.BLACK) // Start with black, inversion cycle will control this
             layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT
@@ -99,6 +99,8 @@ class MainActivity : Activity(), SensorEventListener {
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT
             )
+            // Set initial color filter to white (normal state)
+            setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP)
         }
 
         rootLayout.addView(thumbsIcon)
@@ -113,11 +115,11 @@ class MainActivity : Activity(), SensorEventListener {
         if (isInverted) {
             // Currently inverted: black background, colored thumbs
             rootLayout.setBackgroundColor(Color.BLACK)
-            thumbsIcon.setColorFilter(if (isRed) Color.RED else Color.GREEN, PorterDuff.Mode.SRC_IN)
+            thumbsIcon.setColorFilter(if (isRed) Color.RED else Color.GREEN, PorterDuff.Mode.SRC_ATOP)
         } else {
             // Currently normal: colored background, white thumbs
             rootLayout.setBackgroundColor(getVariedColor(if (isRed) Color.RED else Color.GREEN))
-            thumbsIcon.clearColorFilter()
+            thumbsIcon.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP)
         }
 
         // Also trigger instant brightness on tap
@@ -198,19 +200,7 @@ class MainActivity : Activity(), SensorEventListener {
         }, SHIFT_INTERVAL)
     }
 
-    // Burn-in protection: Color variation
-    private fun startColorVariationTimer() {
-        handler.postDelayed(object : Runnable {
-            override fun run() {
-                // Update background with varied color
-                val baseColor = if (isRed) Color.RED else Color.GREEN
-                rootLayout.setBackgroundColor(getVariedColor(baseColor))
-
-                // Schedule next variation
-                handler.postDelayed(this, 5000) // Every 5 seconds
-            }
-        }, 5000)
-    }
+    // This function is now integrated into the inversion cycle
 
     private fun getVariedColor(baseColor: Int): Int {
         val variance = (Math.random() * COLOR_VARIANCE * 2 - COLOR_VARIANCE).toInt()
@@ -238,22 +228,32 @@ class MainActivity : Activity(), SensorEventListener {
 
     // Burn-in protection: Inversion cycle
     private fun startInversionCycle() {
-        handler.postDelayed(object : Runnable {
+        // Start immediately, then repeat every INVERSION_INTERVAL
+        val inversionRunnable = object : Runnable {
             override fun run() {
+                isInverted = !isInverted
+
+                Log.d("InversionCycle", "Switching to isInverted=$isInverted, isRed=$isRed")
+
                 if (isInverted) {
-                    // State 1: Normal - colored background, white thumbs
-                    rootLayout.setBackgroundColor(getVariedColor(if (isRed) Color.RED else Color.GREEN))
-                    thumbsIcon.clearColorFilter()
-                } else {
                     // State 2: Inverted - black background, colored thumbs
+                    Log.d("InversionCycle", "Setting BLACK background with ${if (isRed) "RED" else "GREEN"} thumbs")
                     rootLayout.setBackgroundColor(Color.BLACK)
-                    thumbsIcon.setColorFilter(if (isRed) Color.RED else Color.GREEN, PorterDuff.Mode.SRC_IN)
+                    thumbsIcon.setColorFilter(if (isRed) Color.RED else Color.GREEN, PorterDuff.Mode.SRC_ATOP)
+                } else {
+                    // State 1: Normal - colored background, white thumbs
+                    val bgColor = getVariedColor(if (isRed) Color.RED else Color.GREEN)
+                    Log.d("InversionCycle", "Setting ${if (isRed) "RED" else "GREEN"} background with WHITE thumbs")
+                    rootLayout.setBackgroundColor(bgColor)
+                    thumbsIcon.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP)
                 }
 
-                isInverted = !isInverted
                 handler.postDelayed(this, INVERSION_INTERVAL)
             }
-        }, INVERSION_INTERVAL)
+        }
+
+        // Start the cycle immediately
+        handler.post(inversionRunnable)
     }
 
     override fun onResume() {
