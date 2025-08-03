@@ -1,0 +1,5 @@
+R_DEF: Internal format may change without notice
+local
+drawable thumbs_down
+drawable thumbs_up
+mipmap ic_launcher

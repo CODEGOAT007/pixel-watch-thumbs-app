@@ -1,0 +1,108 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.instantpeek"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="30"
+9        android:targetSdkVersion="34" />
+10
+11    <!-- Permissions -->
+12    <uses-permission android:name="android.permission.WAKE_LOCK" />
+12-->C:\Wrist Failure Tracker Project\app\src\main\AndroidManifest.xml:6:5-68
+12-->C:\Wrist Failure Tracker Project\app\src\main\AndroidManifest.xml:6:22-65
+13    <uses-permission android:name="android.hardware.sensor.accelerometer" />
+13-->C:\Wrist Failure Tracker Project\app\src\main\AndroidManifest.xml:7:5-77
+13-->C:\Wrist Failure Tracker Project\app\src\main\AndroidManifest.xml:7:22-74
+14
+15    <!-- Wear OS feature -->
+16    <uses-feature android:name="android.hardware.type.watch" />
+16-->C:\Wrist Failure Tracker Project\app\src\main\AndroidManifest.xml:10:5-64
+16-->C:\Wrist Failure Tracker Project\app\src\main\AndroidManifest.xml:10:19-61
+17
+18    <permission
+18-->[androidx.core:core:1.12.0] C:\Users\Chris\.gradle\caches\8.10\transforms\dafd9ee85899d162b9de227d59ccb602\transformed\core-1.12.0\AndroidManifest.xml:22:5-24:47
+19        android:name="com.example.instantpeek.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+19-->[androidx.core:core:1.12.0] C:\Users\Chris\.gradle\caches\8.10\transforms\dafd9ee85899d162b9de227d59ccb602\transformed\core-1.12.0\AndroidManifest.xml:23:9-81
+20        android:protectionLevel="signature" />
+20-->[androidx.core:core:1.12.0] C:\Users\Chris\.gradle\caches\8.10\transforms\dafd9ee85899d162b9de227d59ccb602\transformed\core-1.12.0\AndroidManifest.xml:24:9-44
+21
+22    <uses-permission android:name="com.example.instantpeek.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+22-->[androidx.core:core:1.12.0] C:\Users\Chris\.gradle\caches\8.10\transforms\dafd9ee85899d162b9de227d59ccb602\transformed\core-1.12.0\AndroidManifest.xml:26:5-97
+22-->[androidx.core:core:1.12.0] C:\Users\Chris\.gradle\caches\8.10\transforms\dafd9ee85899d162b9de227d59ccb602\transformed\core-1.12.0\AndroidManifest.xml:26:22-94
+23
+24    <application
+24-->C:\Wrist Failure Tracker Project\app\src\main\AndroidManifest.xml:12:5-40:19
+25        android:allowBackup="true"
+25-->C:\Wrist Failure Tracker Project\app\src\main\AndroidManifest.xml:13:9-35
+26        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+26-->[androidx.core:core:1.12.0] C:\Users\Chris\.gradle\caches\8.10\transforms\dafd9ee85899d162b9de227d59ccb602\transformed\core-1.12.0\AndroidManifest.xml:28:18-86
+27        android:debuggable="true"
+28        android:extractNativeLibs="false"
+29        android:icon="@mipmap/ic_launcher"
+29-->C:\Wrist Failure Tracker Project\app\src\main\AndroidManifest.xml:14:9-43
+30        android:label="Instant Peek"
+30-->C:\Wrist Failure Tracker Project\app\src\main\AndroidManifest.xml:15:9-37
+31        android:theme="@android:style/Theme.DeviceDefault" >
+31-->C:\Wrist Failure Tracker Project\app\src\main\AndroidManifest.xml:16:9-59
+32        <activity
+32-->C:\Wrist Failure Tracker Project\app\src\main\AndroidManifest.xml:18:9-33:20
+33            android:name="com.example.instantpeek.MainActivity"
+33-->C:\Wrist Failure Tracker Project\app\src\main\AndroidManifest.xml:19:13-41
+34            android:configChanges="orientation|keyboardHidden|screenSize"
+34-->C:\Wrist Failure Tracker Project\app\src\main\AndroidManifest.xml:22:13-74
+35            android:exported="true"
+35-->C:\Wrist Failure Tracker Project\app\src\main\AndroidManifest.xml:20:13-36
+36            android:launchMode="singleTask" >
+36-->C:\Wrist Failure Tracker Project\app\src\main\AndroidManifest.xml:21:13-44
+37            <intent-filter>
+37-->C:\Wrist Failure Tracker Project\app\src\main\AndroidManifest.xml:23:13-26:29
+38                <action android:name="android.intent.action.MAIN" />
+38-->C:\Wrist Failure Tracker Project\app\src\main\AndroidManifest.xml:24:17-69
+38-->C:\Wrist Failure Tracker Project\app\src\main\AndroidManifest.xml:24:25-66
+39
+40                <category android:name="android.intent.category.LAUNCHER" />
+40-->C:\Wrist Failure Tracker Project\app\src\main\AndroidManifest.xml:25:17-77
+40-->C:\Wrist Failure Tracker Project\app\src\main\AndroidManifest.xml:25:27-74
+41            </intent-filter>
+42
+43            <!-- Keep as default display -->
+44            <intent-filter>
+44-->C:\Wrist Failure Tracker Project\app\src\main\AndroidManifest.xml:29:13-32:29
+45                <action android:name="android.intent.action.VIEW" />
+45-->C:\Wrist Failure Tracker Project\app\src\main\AndroidManifest.xml:30:17-69
+45-->C:\Wrist Failure Tracker Project\app\src\main\AndroidManifest.xml:30:25-66
+46
+47                <category android:name="android.intent.category.DEFAULT" />
+47-->C:\Wrist Failure Tracker Project\app\src\main\AndroidManifest.xml:31:17-76
+47-->C:\Wrist Failure Tracker Project\app\src\main\AndroidManifest.xml:31:27-73
+48            </intent-filter>
+49        </activity>
+50
+51        <!-- Wear OS library -->
+52        <uses-library
+52-->C:\Wrist Failure Tracker Project\app\src\main\AndroidManifest.xml:36:9-38:39
+53            android:name="com.google.android.wearable"
+53-->C:\Wrist Failure Tracker Project\app\src\main\AndroidManifest.xml:37:13-55
+54            android:required="true" />
+54-->C:\Wrist Failure Tracker Project\app\src\main\AndroidManifest.xml:38:13-36
+55
+56        <activity
+56-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\Chris\.gradle\caches\8.10\transforms\2a768f2481dcb12aae7d9c6ec04584b5\transformed\play-services-base-18.0.1\AndroidManifest.xml:20:9-22:45
+57            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+57-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\Chris\.gradle\caches\8.10\transforms\2a768f2481dcb12aae7d9c6ec04584b5\transformed\play-services-base-18.0.1\AndroidManifest.xml:20:19-85
+58            android:exported="false"
+58-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\Chris\.gradle\caches\8.10\transforms\2a768f2481dcb12aae7d9c6ec04584b5\transformed\play-services-base-18.0.1\AndroidManifest.xml:22:19-43
+59            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+59-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\Chris\.gradle\caches\8.10\transforms\2a768f2481dcb12aae7d9c6ec04584b5\transformed\play-services-base-18.0.1\AndroidManifest.xml:21:19-78
+60
+61        <meta-data
+61-->[com.google.android.gms:play-services-basement:18.0.0] C:\Users\Chris\.gradle\caches\8.10\transforms\9874e0b6cac507f15219097914818e40\transformed\play-services-basement-18.0.0\AndroidManifest.xml:21:9-23:69
+62            android:name="com.google.android.gms.version"
+62-->[com.google.android.gms:play-services-basement:18.0.0] C:\Users\Chris\.gradle\caches\8.10\transforms\9874e0b6cac507f15219097914818e40\transformed\play-services-basement-18.0.0\AndroidManifest.xml:22:13-58
+63            android:value="@integer/google_play_services_version" />
+63-->[com.google.android.gms:play-services-basement:18.0.0] C:\Users\Chris\.gradle\caches\8.10\transforms\9874e0b6cac507f15219097914818e40\transformed\play-services-basement-18.0.0\AndroidManifest.xml:23:13-66
+64    </application>
+65
+66</manifest>
